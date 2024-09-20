@@ -13,6 +13,7 @@ public class WheelTesting extends OpMode {
     private DcMotor frontRightMotor = null;
     private DcMotor backRightMotor = null;
     private DcMotor[] motors = null;
+    private String[] motorNames = null;
 
     private Gamepad gamepad1Previous = new Gamepad();
     private Gamepad gamepad1Current = new Gamepad();
@@ -33,6 +34,7 @@ public class WheelTesting extends OpMode {
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         motors = new DcMotor[] {frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor};
+        motorNames = new String[] {"Front Left Motor", "Back Left Motor", "Front Right Motor", "Back Right Motor"};
     }
 
     @Override
@@ -45,7 +47,11 @@ public class WheelTesting extends OpMode {
         }
 
         if (gamepad1Current.dpad_down && !gamepad1Previous.dpad_down) {
-            motorNumberToTest = (short) ((motorNumberToTest - 1) % 4);
+            if (motorNumberToTest == 0) {
+                motorNumberToTest = (short) (motors.length - 1);
+            } else {
+                motorNumberToTest = (short) ((motorNumberToTest - 1) % 4);
+            }
         }
 
         if (gamepad1Current.dpad_left) {
@@ -63,7 +69,7 @@ public class WheelTesting extends OpMode {
         }
 
         telemetry.addData("Motor Number: ", motorNumberToTest);
-        telemetry.addData("Motor Name: ", motors[motorNumberToTest].getDeviceName());
+        telemetry.addData("Motor Name: ", motorNames[motorNumberToTest]);
         telemetry.addData("Motor Direction: ", motors[motorNumberToTest].getDirection());
         telemetry.addData("Motor Power: ", motors[motorNumberToTest].getPower());
     }
