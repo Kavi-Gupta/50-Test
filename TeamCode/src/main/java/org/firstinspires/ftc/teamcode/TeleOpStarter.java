@@ -102,7 +102,7 @@ public class TeleOpStarter extends LinearOpMode {
     We divide that by 360 to get the counts per degree. Which is 7.46666666667.
 
     */
-    final double ARM_TICKS_PER_DEGREE = 7.4666666667; //exact fraction is (194481/9826)
+    final double ARM_TICKS_PER_DEGREE = 19.7924893140647; //312 RPM Motor: 7.4666666667
 
 
     /* These constants hold the position that the arm is commanded to run to.
@@ -130,8 +130,8 @@ public class TeleOpStarter extends LinearOpMode {
     final double INTAKE_DEPOSIT    =  0.5;
 
     /* Variables to store the positions that the wrist should be set to when folding in, or folding out. */
-    final double WRIST_FOLDED_IN   = 0.8333;
-    final double WRIST_FOLDED_OUT  = 0.5;
+    final double WRIST_FOLDED_IN   = 0;
+    final double WRIST_FOLDED_OUT  = 0.27;
 
     /* A number in degrees that the triggers can adjust the arm position by */
     final double FUDGE_FACTOR = 15 * ARM_TICKS_PER_DEGREE;
@@ -150,7 +150,7 @@ public class TeleOpStarter extends LinearOpMode {
         frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
 
-        armMotor   = hardwareMap.get(DcMotor.class, "left_arm"); //the arm motor
+        armMotor   = hardwareMap.get(DcMotor.class, "arm"); //the arm motor
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -167,6 +167,7 @@ public class TeleOpStarter extends LinearOpMode {
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
         /*This sets the maximum current that the control hub will apply to the arm before throwing a flag */
         ((DcMotorEx) armMotor).setCurrentAlert(5,CurrentUnit.AMPS);
